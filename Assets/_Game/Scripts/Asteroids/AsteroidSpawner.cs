@@ -1,116 +1,118 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DefaultNamespace;
 
 namespace Asteroids
 {
-    public class AsteroidSpawner : MonoBehaviour
-    {
-        [SerializeField] private Asteroid _asteroidPrefab;
-        [SerializeField] private float _minSpawnTime;
-        [SerializeField] private float _maxSpawnTime;
-        [SerializeField] private int _minAmount;
-        [SerializeField] private int _maxAmount;
-        
-        private float _timer;
-        private float _nextSpawnTime;
-        private Camera _camera;
+	public class AsteroidSpawner : MonoBehaviour
+	{
+		[SerializeField] private Asteroid _asteroidPrefab;
+		[SerializeField] private AsteroidConfig _asteroidConfig;
 
-        private enum SpawnLocation
-        {
-            Top,
-            Bottom,
-            Left,
-            Right
-        }
+		private float _timer;
+		private float _nextSpawnTime;
+		private Camera _camera;
 
-        private void Start()
-        {
-            _camera = Camera.main;
-            Spawn();
-            UpdateNextSpawnTime();
-        }
+		private List<SpawnLocation> _spawnLocations;
 
-        private void Update()
-        {
-            UpdateTimer();
+		private enum SpawnLocation
+		{
+			Top,
+			Bottom,
+			Left,
+			Right
+		}
 
-            if (!ShouldSpawn())
-                return;
+		private void Start()
+		{
+			_spawnLocations = new List<SpawnLocation>();
 
-            Spawn();
-            UpdateNextSpawnTime();
-            _timer = 0f;
-        }
+			if (_asteroidConfig.incomingDirectionTop) _spawnLocations.Add(SpawnLocation.Top);
+			if (_asteroidConfig.incomingDirectionLeft) _spawnLocations.Add(SpawnLocation.Left);
+			if (_asteroidConfig.incomingDirectionRight) _spawnLocations.Add(SpawnLocation.Right);
+			if (_asteroidConfig.incomingDirectionBottom) _spawnLocations.Add(SpawnLocation.Bottom);
 
-        private void UpdateNextSpawnTime()
-        {
-            _nextSpawnTime = Random.Range(_minSpawnTime, _maxSpawnTime);
-        }
+			_camera = Camera.main;
+			Spawn();
+			UpdateNextSpawnTime();
+		}
 
-        private void UpdateTimer()
-        {
-            _timer += Time.deltaTime;
-        }
+		private void Update()
+		{
+			UpdateTimer();
 
-        private bool ShouldSpawn()
-        {
-            return _timer >= _nextSpawnTime;
-        }
+			if (!ShouldSpawn())
+				return;
 
-        private void Spawn()
-        {
-            var amount = Random.Range(_minAmount, _maxAmount + 1);
-            
-            for (var i = 0; i < amount; i++)
-            {
-                var location = GetSpawnLocation();
-                var position = GetStartPosition(location);
-                Instantiate(_asteroidPrefab, position, Quaternion.identity);
-            }
-        }
+			Spawn();
+			UpdateNextSpawnTime();
+			_timer = 0f;
+		}
 
-        private static SpawnLocation GetSpawnLocation()
-        {
-            var roll = Random.Range(0, 4);
+		private void UpdateNextSpawnTime()
+		{
+			_nextSpawnTime = Random.Range(_asteroidConfig.minSpawnTime, _asteroidConfig.maxSpawnTime);
+		}
 
-            return roll switch
-            {
-                1 => SpawnLocation.Bottom,
-                2 => SpawnLocation.Left,
-                3 => SpawnLocation.Right,
-                _ => SpawnLocation.Top
-            };
-        }
+		private void UpdateTimer()
+		{
+			_timer += Time.deltaTime;
+		}
 
-        private Vector3 GetStartPosition(SpawnLocation spawnLocation)
-        {
-            var pos = new Vector3 { z = Mathf.Abs(_camera.transform.position.z) };
-            
-            const float padding = 5f;
-            switch (spawnLocation)
-            {
-                case SpawnLocation.Top:
-                    pos.x = Random.Range(0f, Screen.width);
-                    pos.y = Screen.height + padding;
-                    break;
-                case SpawnLocation.Bottom:
-                    pos.x = Random.Range(0f, Screen.width);
-                    pos.y = 0f - padding;
-                    break;
-                case SpawnLocation.Left:
-                    pos.x = 0f - padding;
-                    pos.y = Random.Range(0f, Screen.height);
-                    break;
-                case SpawnLocation.Right:
-                    pos.x = Screen.width - padding;
-                    pos.y = Random.Range(0f, Screen.height);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(spawnLocation), spawnLocation, null);
-            }
-            
-            return _camera.ScreenToWorldPoint(pos);
-        }
-    }
+		private bool ShouldSpawn()
+		{
+			return _timer >= _nextSpawnTime;
+		}
+
+		private void Spawn()
+		{
+			var amount = Random.Range(_asteroidConfig.minAmount, _asteroidConfig.maxAmount + 1);
+
+			for (var i = 0; i < amount; i++)
+			{
+				var location = GetSpawnLocation();
+				var position = GetStartPosition(location);
+				Instantiate(_asteroidPrefab, position, Quaternion.identity);
+			}
+		}
+
+		private SpawnLocation GetSpawnLocation()
+		{
+			var roll = Random.Range(0, _spawnLocations.Count);
+
+			return _spawnLocations[roll];
+		}
+
+		private Vector3 GetStartPosition(SpawnLocation spawnLocation)
+		{
+			var pos = new Vector3 { z = Mathf.Abs(_camera.transform.position.z) };
+
+			const float padding = 5f;
+			switch (spawnLocation)
+			{
+				case SpawnLocation.Top:
+					pos.x = Random.Range(0f, Screen.width);
+					pos.y = Screen.height + padding;
+					break;
+				case SpawnLocation.Bottom:
+					pos.x = Random.Range(0f, Screen.width);
+					pos.y = 0f - padding;
+					break;
+				case SpawnLocation.Left:
+					pos.x = 0f - padding;
+					pos.y = Random.Range(0f, Screen.height);
+					break;
+				case SpawnLocation.Right:
+					pos.x = Screen.width - padding;
+					pos.y = Random.Range(0f, Screen.height);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(spawnLocation), spawnLocation, null);
+			}
+
+			return _camera.ScreenToWorldPoint(pos);
+		}
+	}
 }

@@ -1,6 +1,7 @@
 using DefaultNamespace.ScriptableEvents;
 using UnityEngine;
 using Variables;
+using DefaultNamespace;
 
 namespace Ship
 {

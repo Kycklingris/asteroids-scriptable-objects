@@ -53,6 +53,7 @@ MonoBehaviour:
   _minTorque: 0.1
   _maxTorque: 0.5
   _shape: {fileID: 1524412162417054026}
+  _asteroidConfig: {fileID: 11400000, guid: 3217d38219679ec4196d7a98f0876353, type: 2}
 --- !u!50 &1784223117350305362
 Rigidbody2D:
   serializedVersion: 4

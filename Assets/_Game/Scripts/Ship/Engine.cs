@@ -1,6 +1,7 @@
 using UnityEditor.VersionControl;
 using UnityEngine;
 using Variables;
+using DefaultNamespace;
 
 namespace Ship
 {

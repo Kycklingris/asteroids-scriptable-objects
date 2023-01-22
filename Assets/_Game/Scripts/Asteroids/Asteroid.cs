@@ -2,6 +2,7 @@ using DefaultNamespace.ScriptableEvents;
 using UnityEngine;
 using Variables;
 using Random = UnityEngine.Random;
+using DefaultNamespace;
 
 namespace Asteroids
 {
@@ -20,8 +21,9 @@ namespace Asteroids
 
         [Header("References:")]
         [SerializeField] private Transform _shape;
+		[SerializeField] private AsteroidConfig _asteroidConfig;
 
-        private Rigidbody2D _rigidbody;
+		private Rigidbody2D _rigidbody;
         private Vector3 _direction;
         private int _instanceId;
 
@@ -87,7 +89,7 @@ namespace Asteroids
 
         private void AddTorque()
         {
-            var torque = Random.Range(_minTorque, _maxTorque);
+            var torque = Random.Range(_asteroidConfig.minRotationSpeed, _asteroidConfig.maxRotationSpeed);
             var roll = Random.Range(0, 2);
 
             if (roll == 0)
