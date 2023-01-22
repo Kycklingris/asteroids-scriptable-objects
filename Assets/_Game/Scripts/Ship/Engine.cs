@@ -5,52 +5,51 @@ using DefaultNamespace;
 
 namespace Ship
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    public class Engine : MonoBehaviour
-    {
-        [SerializeField] private FloatVariable _throttlePower;
-        [SerializeField] private FloatVariable _rotationPower;
-        
-        [SerializeField] private float _throttlePowerSimple;
-        [SerializeField] private float _rotationPowerSimple;
+	[RequireComponent(typeof(Rigidbody2D))]
+	public class Engine : MonoBehaviour
+	{
+		[SerializeField] private ShipConfig _shipConfig;
 
-        private Rigidbody2D _rigidbody;
-        
-        private void FixedUpdate()
-        {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                Throttle();
-            }
-        
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                SteerLeft();
-            } 
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                SteerRight();
-            }
-        }
+		[SerializeField] private float _throttlePowerSimple;
+		[SerializeField] private float _rotationPowerSimple;
 
-        private void Start()
-        {
-            _rigidbody = GetComponent<Rigidbody2D>();
-        }
-    
-        public void Throttle()
-        {
-            _rigidbody.AddForce(transform.up * _throttlePower.Value, ForceMode2D.Force);
-        }
+		private Rigidbody2D _rigidbody;
 
-        public void SteerLeft()
-        {
-            _rigidbody.AddTorque(_rotationPower.Value, ForceMode2D.Force);
-        }
+		private void FixedUpdate()
+		{
+			if (Input.GetKey(KeyCode.UpArrow))
+			{
+				Throttle();
+			}
 
-        public void SteerRight()
-        {
-            _rigidbody.AddTorque(-_rotationPower.Value, ForceMode2D.Force);
-        }
-    }
+			if (Input.GetKey(KeyCode.LeftArrow))
+			{
+				SteerLeft();
+			}
+			else if (Input.GetKey(KeyCode.RightArrow))
+			{
+				SteerRight();
+			}
+		}
+
+		private void Start()
+		{
+			_rigidbody = GetComponent<Rigidbody2D>();
+		}
+
+		public void Throttle()
+		{
+			_rigidbody.AddForce(transform.up * _shipConfig.throttle, ForceMode2D.Force);
+		}
+
+		public void SteerLeft()
+		{
+			_rigidbody.AddTorque(_shipConfig.rotation, ForceMode2D.Force);
+		}
+
+		public void SteerRight()
+		{
+			_rigidbody.AddTorque(-_shipConfig.rotation, ForceMode2D.Force);
+		}
+	}
 }

@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3169066251457290625}
   - component: {fileID: 3119465934673122495}
+  - component: {fileID: 6377647371679412312}
   - component: {fileID: 7434321719335165977}
   - component: {fileID: 6355803093840545148}
   m_Layer: 0
@@ -121,6 +122,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _toDestroy: {fileID: 1784223117350305384}
+--- !u!114 &6377647371679412312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7041230333510869417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628e002a54a0ab542964b78f659efef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _asteroidConfig: {fileID: 11400000, guid: 3217d38219679ec4196d7a98f0876353, type: 2}
 --- !u!212 &7434321719335165977
 SpriteRenderer:
   m_ObjectHideFlags: 0

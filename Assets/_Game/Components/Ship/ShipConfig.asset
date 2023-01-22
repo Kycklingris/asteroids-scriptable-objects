@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 395422e491154d9abcceab7c93aaef7d, type: 3}
-  m_Name: RotationPower
+  m_Script: {fileID: 11500000, guid: d965cc6684a2486e9ed6a26a8f625ee9, type: 3}
+  m_Name: ShipConfig
   m_EditorClassIdentifier: 
-  _value: 3
+  _throttle: 0
+  _rotation: 3
