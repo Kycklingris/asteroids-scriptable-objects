@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c35152d0729f84a8ca5f19f9f43a65, type: 3}
   m_Name: AsteroidConfig
   m_EditorClassIdentifier: 
-  _minSpawnTime: 1
-  _maxSpawnTime: 4
+  _minSpawnTime: 5.3795614
+  _maxSpawnTime: 8.379561
   _minAmount: 1
-  _maxAmount: 2
+  _maxAmount: 3
   _minRotationSpeed: 0.1
   _maxRotationSpeed: 0.5
   _damage: 1

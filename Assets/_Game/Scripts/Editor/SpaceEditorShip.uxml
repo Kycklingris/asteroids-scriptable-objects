@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Foldout text="Ship" name="Ship" style="font-size: 15px;">
-        <ui:Slider picking-mode="Ignore" label="Rotation Speed" value="42" high-value="100" show-input-field="true" tooltip="The speed at which the ship will rotate when the corresponding keyboard button is held" binding-path="_rotation" style="font-size: 12px;" />
+        <ui:Slider picking-mode="Ignore" label="Rotation Speed" value="42" high-value="100" show-input-field="true" tooltip="The speed at which the ship will rotate" binding-path="_rotation" style="font-size: 12px;" />
         <ui:Slider picking-mode="Ignore" label="Thruster" value="42" high-value="100" show-input-field="true" tooltip="The rate at which the ship will accelerate" binding-path="_throttle" style="font-size: 12px;" />
     </ui:Foldout>
 </ui:UXML>

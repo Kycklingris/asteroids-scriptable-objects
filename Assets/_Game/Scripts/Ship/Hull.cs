@@ -7,8 +7,9 @@ namespace Ship
 {
     public class Hull : MonoBehaviour
     {
-        //[SerializeField] private IntVariable _health;
-        [SerializeField] private ScriptableEventIntReference _onHealthChangedEvent;
+		[SerializeField] private AsteroidConfig _asteroidConfig;
+		//[SerializeField] private IntVariable _health;
+		[SerializeField] private ScriptableEventIntReference _onHealthChangedEvent;
         [SerializeField] private IntReference _healthRef;
         [SerializeField] private IntObservable _healthObservable;
         
@@ -20,7 +21,7 @@ namespace Ship
                 // TODO can we bake this into one call?
                 //_healthRef.ApplyChange(-1);
                 //_onHealthChangedEvent.Raise(_healthRef);
-                _healthObservable.ApplyChange(-1);
+                _healthObservable.ApplyChange(-_asteroidConfig.damage);
             }
         }
     }

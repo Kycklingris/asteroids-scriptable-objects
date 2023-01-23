@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8049130da1c3b374a8385482151b2e98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _asteroidConfig: {fileID: 11400000, guid: 3217d38219679ec4196d7a98f0876353, type: 2}
   _onHealthChangedEvent: {fileID: 11400000, guid: 1c89cb8edd31962449ecaa94187a07fc, type: 2}
   _healthRef:
     _intVariable: {fileID: 11400000, guid: 40cfb1e1b58e0f84a966e03698c56110, type: 2}

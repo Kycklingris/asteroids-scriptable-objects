@@ -1,6 +1,15 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:Foldout text="Asteroid" name="Asteroid" style="font-size: 15px;">
-        <uie:ColorField label="Color" value="RGBA(0.000, 1.000, 1.000, 1.000)" tooltip="The color of the spawned asteroid" style="font-size: 12px;" />
-        <uie:ObjectField label="Sprite" type="UnityEngine.Sprite, UnityEngine.CoreModule" tooltip="The shape of the spawned asteroid" style="font-size: 12px;" />
+        <ui:VisualElement name="RotationSpeed" style="flex-direction: row; font-size: 12px;">
+            <ui:Label text="Rotation Speed" display-tooltip-when-elided="true" tooltip="The range at which spawned asteroids will rotate at" style="width: 30%;" />
+            <ui:VisualElement name="MinMaxSliderWithValueFloat" style="width: 75%; flex-direction: row; flex-grow: 0; flex-shrink: 1;">
+                <uie:FloatField value="42.2" tooltip="Minimum Value" binding-path="_minRotationSpeed" style="width: 15%;" />
+                <ui:MinMaxSlider min-value="1" max-value="4" low-limit="0" high-limit="2" usage-hints="None" tooltip="The amount of time between asteroids spawning" picking-mode="Ignore" style="width: auto; flex-grow: 1;" />
+                <uie:FloatField value="42.2" tooltip="Maximum Value" binding-path="_maxRotationSpeed" style="width: 15%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:SliderInt picking-mode="Ignore" label="Damage" value="1" high-value="15" show-input-field="true" binding-path="_damage" style="font-size: 12px;" />
+        <uie:ColorField label="Color" value="RGBA(0.000, 1.000, 1.000, 1.000)" tooltip="The color of the spawned asteroid" binding-path="_color" style="font-size: 12px;" />
+        <uie:ObjectField label="Sprite" type="UnityEngine.Sprite, UnityEngine.CoreModule" tooltip="The shape of the spawned asteroid" binding-path="_sprite" style="font-size: 12px;" />
     </ui:Foldout>
 </ui:UXML>

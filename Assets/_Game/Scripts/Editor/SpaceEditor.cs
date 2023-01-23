@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,17 +29,139 @@ public class SpaceEditor : EditorWindow
 		VisualElement root = rootVisualElement;
 
 		// Import UXML
+		AddSpawnerTab();
+		AddUXML(_separatorVisualTreePath);
+		AddAsteroidTab();
+		AddUXML(_separatorVisualTreePath);
+		AddShipTab();
+
+		ConnectSlidersAndFields();
+	}
+
+	private void ConnectSlidersAndFields()
+	{
+		var floatSliders = rootVisualElement.Query(name: "MinMaxSliderWithValueFloat").ToList();
+		var intSliders = rootVisualElement.Query(name: "MinMaxSliderWithValueInt").ToList();
+
+		foreach (var sliderWrapper in floatSliders)
+		{
+			var min = (FloatField)sliderWrapper[0];
+			var slider = (MinMaxSlider)sliderWrapper[1];
+			var max = (FloatField)sliderWrapper[2];
+
+			slider.SetValueWithoutNotify(new Vector2(min.value, max.value));
+
+			slider.RegisterValueChangedCallback<Vector2>((e) =>
+			{
+				min.value = e.newValue.x;
+				max.value = e.newValue.y;
+			});
+
+			min.RegisterValueChangedCallback<float>((e) =>
+			{
+				if (e.newValue > max.value)
+				{
+					min.SetValueWithoutNotify(e.previousValue);
+					e.PreventDefault();
+					return;
+				}
+
+				var value = slider.value;
+				value.x = e.newValue;
+
+				slider.SetValueWithoutNotify(value);
+			});
+
+			max.RegisterValueChangedCallback<float>((e) =>
+			{
+				if (e.newValue < min.value)
+				{
+					max.SetValueWithoutNotify(e.previousValue);
+					e.PreventDefault();
+					return;
+				}
+
+				var value = slider.value;
+				value.y = e.newValue;
+
+				slider.SetValueWithoutNotify(value);
+			});
+		}
+
+		foreach (var sliderWrapper in intSliders)
+		{
+			var min = (IntegerField)sliderWrapper[0];
+			var slider = (MinMaxSlider)sliderWrapper[1];
+			var max = (IntegerField)sliderWrapper[2];
+
+			slider.SetValueWithoutNotify(new Vector2(min.value, max.value));
+
+			slider.RegisterValueChangedCallback<Vector2>((e) =>
+			{
+				min.value = (int)e.newValue.x;
+				max.value = (int)e.newValue.y;
+			});
+
+			min.RegisterValueChangedCallback<int>((e) =>
+			{
+				if (e.newValue > max.value)
+				{
+					min.SetValueWithoutNotify(e.previousValue);
+					e.PreventDefault();
+					return;
+				}
+
+				var value = slider.value;
+				value.x = e.newValue;
+
+				slider.SetValueWithoutNotify(value);
+			});
+
+			max.RegisterValueChangedCallback<int>((e) =>
+			{
+				if (e.newValue < min.value)
+				{
+					max.SetValueWithoutNotify(e.previousValue);
+					e.PreventDefault();
+					return;
+				}
+
+				var value = slider.value;
+				value.y = e.newValue;
+
+				slider.SetValueWithoutNotify(value);
+			});
+		}
+	}
+
+	private void AddSpawnerTab()
+	{
+		var asteroidConfig = AssetDatabase.LoadAssetAtPath<ScriptableObject>(_asteroidConfigPath);
+		var asteroidSO = new SerializedObject(asteroidConfig);
+
 		var spawnerElem = AddUXML(_spawnerVisualTreePath);
-		AddUXML(_separatorVisualTreePath);
-		var asteroidElem = AddUXML(_asteroidVisualTreePath);
-		AddUXML(_separatorVisualTreePath);
-		var shipElem = AddUXML(_shipVisualTreePath);
+		spawnerElem[0].Bind(asteroidSO);
+	}
 
+	private void AddAsteroidTab()
+	{
 		var shipConfig = AssetDatabase.LoadAssetAtPath<ScriptableObject>(_shipConfigPath);
+		var shipSO = new SerializedObject(shipConfig);
 
-		var so = new SerializedObject(shipConfig);
+		var asteroidConfig = AssetDatabase.LoadAssetAtPath<ScriptableObject>(_asteroidConfigPath);
+		var asteroidSO = new SerializedObject(asteroidConfig);
 
-		shipElem[0].Bind(so);
+		var asteroidElem = AddUXML(_asteroidVisualTreePath);
+		asteroidElem[0].Bind(asteroidSO);
+		asteroidElem[0].Bind(shipSO);
+	}
+	private void AddShipTab()
+	{
+		var shipConfig = AssetDatabase.LoadAssetAtPath<ScriptableObject>(_shipConfigPath);
+		var shipSO = new SerializedObject(shipConfig);
+
+		var shipElem = AddUXML(_shipVisualTreePath);
+		shipElem[0].Bind(shipSO);
 	}
 
 	private VisualElement AddUXML(string path)

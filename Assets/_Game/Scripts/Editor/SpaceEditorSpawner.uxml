@@ -1,30 +1,30 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:Foldout text="Asteroid Spawning" name="AsteroidSpawning" style="font-size: 15px;">
         <ui:VisualElement name="SpawnTime" style="flex-direction: row; font-size: 12px;">
             <ui:Label text="Spawn Time" display-tooltip-when-elided="true" tooltip="The amount of time (seconds) between asteroids spawning." style="width: 30%;" />
-            <ui:VisualElement style="width: 75%; flex-direction: row;">
-                <ui:Label text="1" display-tooltip-when-elided="true" style="width: 10%; padding-right: 1px; -unity-text-align: upper-center;" />
-                <ui:MinMaxSlider min-value="1" max-value="4" low-limit="0" high-limit="20" usage-hints="None" tooltip="The amount of time between asteroids spawning" picking-mode="Ignore" style="width: 80%;" />
-                <ui:Label text="4" display-tooltip-when-elided="true" style="width: 10%; -unity-text-align: upper-center; padding-right: 1px;" />
+            <ui:VisualElement name="MinMaxSliderWithValueFloat" style="width: 75%; flex-direction: row; flex-grow: 0; flex-shrink: 1;">
+                <uie:FloatField value="42.2" tooltip="Minimum Value" binding-path="_minSpawnTime" style="width: 15%;" />
+                <ui:MinMaxSlider min-value="1" max-value="4" low-limit="0" high-limit="10" usage-hints="None" tooltip="The amount of time between asteroids spawning" picking-mode="Ignore" style="width: auto; flex-grow: 1;" />
+                <uie:FloatField value="42.2" tooltip="Maximum Value" binding-path="_maxSpawnTime" style="width: 15%;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="SpawnAmount" style="flex-direction: row; font-size: 12px;">
             <ui:Label text="Amount" display-tooltip-when-elided="true" tooltip="The amount of asteroids that will spawn" style="width: 30%;" />
-            <ui:VisualElement style="width: 75%; flex-direction: row;">
-                <ui:Label text="1" display-tooltip-when-elided="true" style="width: 10%; padding-right: 1px; -unity-text-align: upper-center;" />
-                <ui:MinMaxSlider picking-mode="Ignore" min-value="1" max-value="4" low-limit="0" high-limit="20" usage-hints="None" tooltip="The amount of time between asteroids spawning" style="width: 80%;" />
-                <ui:Label text="4" display-tooltip-when-elided="true" style="width: 10%; -unity-text-align: upper-center; padding-right: 1px;" />
+            <ui:VisualElement name="MinMaxSliderWithValueInt" style="width: 75%; flex-direction: row;">
+                <uie:IntegerField value="42" tooltip="Minimum Value" binding-path="_minAmount" style="width: 15%;" />
+                <ui:MinMaxSlider picking-mode="Ignore" min-value="1" max-value="4" low-limit="0" high-limit="10" usage-hints="None" tooltip="The amount of time between asteroids spawning" style="width: auto; flex-grow: 1;" />
+                <uie:IntegerField value="42" tooltip="Maximum Value" binding-path="_maxAmount" style="width: 15%;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="SpawnDirection" style="flex-direction: row; font-size: 12px; margin-top: 4px; margin-bottom: 4px;">
+        <ui:VisualElement name="SpawnDirection" style="flex-direction: row; font-size: 12px; margin-top: 4px; margin-bottom: 4px; justify-content: space-between;">
             <ui:Label text="Spawn Direction" display-tooltip-when-elided="true" tooltip="Select which edges of the screen asteroids should spawn from (Top, Left, Right and Bottom))" style="-unity-text-align: middle-left; padding-right: 25px;" />
-            <ui:VisualElement name="Buttons" style="width: 37px; flex-direction: column; padding-right: 0;">
-                <ui:Toggle name="Top" style="align-items: center; justify-content: center; flex-direction: row; left: 50%; top: 0;" />
+            <ui:VisualElement name="Buttons" style="width: auto; flex-direction: column; padding-right: 0; margin-left: 0; margin-right: 10%;">
+                <ui:Toggle name="Top" tooltip="Wether or not the asteroids should spawn on the top edge of the screen" binding-path="_incomingDirectionTop" style="align-items: center; justify-content: center; flex-direction: row; left: 50%; top: 0;" />
                 <ui:VisualElement style="flex-direction: row;">
-                    <ui:Toggle name="Left" style="align-items: center; left: auto; top: initial;" />
-                    <ui:Toggle name="Right" style="align-items: center; left: auto; padding-left: 50%;" />
+                    <ui:Toggle name="Left" tooltip="Wether or not the asteroids should spawn on the left edge of the screen" binding-path="_incomingDirectionLeft" style="align-items: center; left: auto; top: initial;" />
+                    <ui:Toggle name="Right" tooltip="Wether or not the asteroids should spawn on the right edge of the screen" binding-path="_incomingDirectionRight" style="align-items: center; left: auto; padding-left: 50%; width: 100%;" />
                 </ui:VisualElement>
-                <ui:Toggle name="Bottom" style="align-items: center; left: 50%;" />
+                <ui:Toggle name="Bottom" tooltip="Wether or not the asteroids should spawn on the bottom edge of the screen" binding-path="_incomingDirectionBottom" style="align-items: center; left: 50%;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:Foldout>
