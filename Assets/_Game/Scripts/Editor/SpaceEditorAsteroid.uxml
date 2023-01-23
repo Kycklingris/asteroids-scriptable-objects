@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Foldout text="Asteroid" name="Asteroid" style="font-size: 15px;">
+        <uie:ColorField label="Color" value="RGBA(0.000, 1.000, 1.000, 1.000)" tooltip="The color of the spawned asteroid" style="font-size: 12px;" />
+        <uie:ObjectField label="Sprite" type="UnityEngine.Sprite, UnityEngine.CoreModule" tooltip="The shape of the spawned asteroid" style="font-size: 12px;" />
+    </ui:Foldout>
+</ui:UXML>
